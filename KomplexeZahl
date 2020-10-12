@@ -111,6 +111,8 @@ public class KomplexeZahl {
         return new KomplexeZahl(this.a * z.a - this.b * z.b, this.a * z.b + z.a * this.b);
     }
 
+    // Test
+
     public static void main(String[] args) {
         KomplexeZahl z = new KomplexeZahl(0, 0); // z := 0
         System.out.println("z = " + z);

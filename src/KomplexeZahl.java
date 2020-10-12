@@ -6,91 +6,105 @@ import java.util.Arrays;
 
 public class KomplexeZahl {
 
-    private double a;
-    private double b;
+    /**
+     * @param x Realteil
+     * @param y Imaginaerteil
+     */
+    private double x;
+    private double y;
 
     /**
      * Konstruktor
-     * @param a Realteil
-     * @param b Imaginaerteil
+     *
+     * @param x Realteil
+     * @param y Imaginaerteil
      */
-    public KomplexeZahl(double a, double b) {
-        this.a = a;
-        this.b = b;
+    public KomplexeZahl(double x, double y) {
+        this.x = x;
+        this.y = y;
     }
 
+
     /**
-     *
      * @return gibt den Realteil zurueck
      */
-    public double getA() {
-        return this.a;
+    public double getRealteil() {
+        return this.x;
     }
 
     /**
-     *
      * @return gibt den Imaginaerteil zurueck
      */
-    public double getB() {
-        return this.b;
+    public double getImaginaerteil() {
+        return this.y;
     }
 
     /**
      * addiert this mit einer weiteren komplexen Zahl
+     *
      * @param z ist die zu addierende Zahl
      */
     public void addiere(KomplexeZahl z) {
-        this.a += z.a;
-        this.b += z.b;
+        this.x += z.getRealteil();
+        this.y += z.getImaginaerteil();
     }
 
     /**
      * multipliziert this mit einer weiteren komplexen Zahl
+     *
      * @param z ist die zu multiplizierende Zahl
      */
     public void multipliziere(KomplexeZahl z) {
-        double c;
-        c = this.a;
-        this.a = (this.a * z.a) - (this.b * z.b);
-        this.b = (c * z.b) + (z.a * this.b);
+        double tempX = this.x; // temporaere Speicherung vom Realteil
+        this.x = (this.x * z.getRealteil()) - (this.y * z.getImaginaerteil());
+        this.y = (tempX * z.getImaginaerteil()) + (z.getRealteil() * this.y);
     }
 
     /**
      * Diese Methode berechnet den Betrag einer komplexen Zahl.
+     *
      * @return gibt den Betrag zurueck
      */
     public double getBetrag() {
-        return Math.sqrt(Math.pow(this.a, 2) + Math.pow(this.b, 2));
+        return Math.sqrt(this.x * this.x + this.y * this.y);
     }
 
     /**
      * Ueberschreibt die default toString Methode
+     *
      * @return textuelle Repraesentation der komplexen Zahl
      */
     public String toString() {
-        if (this.b == 0) {
-            return "" + this.a;
-        }
-        if (this.a == 0) {
-            if (this.b == 1) {
-                return "i";
+        String res = new String();
+        if (this.y == 0) {
+            res += this.x;
+        } else {
+            if (this.x == 0) {
+                if (this.y == 1) {
+                    res += "i";
+                } else {
+                    res += this.y + " i";
+                }
+            } else {
+                if (this.y == 1) {
+                    res += this.x + " + i";
+                } else {
+                    if (this.y == -1) {
+                        res += this.x + " - i";
+                    } else {
+                        if (this.y < 0) {
+                            res += this.x + " - " + Math.abs(this.y) + " i";
+                        } else {
+                            res += this.x + " + " + this.y + " i";
+                        }
+                    }
+                }
             }
-            return this.b + " i";
         }
-        if (this.b == 1) {
-            return this.a + " + i";
-        }
-        if (this.b == -1) {
-            return this.a + " - i";
-        }
-        if (this.b < 0) {
-            return this.a + " - " + Math.abs(this.b) + " i";
-        }
-        return this.a + " + " + this.b + " i";
+        return res;
     }
 
     /**
-     *
      * @return gibt die Quadratwurzel einer komplexen Zahl zurueck
      */
     public KomplexeZahl[] getWurzel() {
@@ -99,30 +113,34 @@ public class KomplexeZahl {
         KomplexeZahl z2 = new KomplexeZahl(0, 0);
         boolean schalter = true;
         double q = 0;
-        if (this.a == 0) {
-            z1 = new KomplexeZahl(0, Math.sqrt(Math.abs(this.b)));
-            z2 = new KomplexeZahl(0, -Math.sqrt(Math.abs(this.b)));
+        if (this.x == 0) {
+            z1 = new KomplexeZahl(0, Math.sqrt(Math.abs(this.y)));
+            z2 = new KomplexeZahl(0, -Math.sqrt(Math.abs(this.y)));
             schalter = false;
-        }
-        if (this.b == 0) {
-            if (this.a > 0) {
-                z1 = new KomplexeZahl(Math.sqrt(this.a), 0);
-                z2 = new KomplexeZahl(-Math.sqrt(this.a), 0);
-            } else {
-                z1 = new KomplexeZahl(0, Math.sqrt(Math.abs(this.a)));
-                z2 = new KomplexeZahl(0, -Math.sqrt(Math.abs(this.a)));
+        } else {
+            if (this.y == 0) {
+                if (this.x > 0) {
+                    z1 = new KomplexeZahl(Math.sqrt(Math.abs(this.x)), 0);
+                    z2 = new KomplexeZahl(-Math.sqrt(Math.abs(this.x)), 0);
+                } else {
+                    z1 = new KomplexeZahl(0, Math.sqrt(Math.abs(this.x)));
+                    z2 = new KomplexeZahl(0, -Math.sqrt(Math.abs(this.x)));
+                }
+                schalter = false;
             }
-            schalter = false;
         }
-        if (this.a > 0 && this.b > 0) {
-            q = Math.atan(this.b / this.a);
+        if (this.x > 0 && this.y > 0) {
+            q = Math.atan(this.y / this.x);
+        } else {
+            if ((this.x < 0 && this.y > 0) || (this.x < 0 && this.y < 0)) {
+                q = Math.atan(this.y / this.x) + Math.PI;
+            } else {
+                if (this.x > 0 && this.y < 0) {
+                    q = Math.atan(this.y / this.x) + 2 * Math.PI;
+                }
+            }
         }
-        if ((this.a < 0 && this.b > 0) || (this.a < 0 && this.b < 0)) {
-            q = Math.atan(this.b / this.a) + Math.PI;
-        }
-        if (this.a > 0 && this.b < 0) {
-            q = Math.atan(this.b / this.a) + 2 * Math.PI;
-        }
+
         double r = this.getBetrag();
         if (schalter) {
             z1 = new KomplexeZahl(Math.sqrt(r) * Math.cos(q / 2), Math.sqrt(r) * Math.sin(q / 2));
@@ -135,21 +153,23 @@ public class KomplexeZahl {
 
     /**
      * Berechnet die Summer zweiter komplexer Zahlen
+     *
      * @param z zu addierende komplexe Zahl
      * @return gibt die Summe als komplexe Zahl zurueck
      */
     public KomplexeZahl getSumme(KomplexeZahl z) {
-        return new KomplexeZahl(this.a + z.a, this.b + z.b);
+        return new KomplexeZahl(this.x + z.getRealteil(), this.y + z.getImaginaerteil());
     }
 
     /**
      * Berechnet das Produkt zweiter komplexer Zahlen
+     *
      * @param z ist die zu multiplizierende Zahl
      * @return gibt das Produkt als komplexe Zahl zurueck
      */
     public KomplexeZahl getProdukt(KomplexeZahl z) {
         // gibt das Produkt zweiter komplexer Zahlen als komplexe Zahl zurueck
-        return new KomplexeZahl(this.a * z.a - this.b * z.b, this.a * z.b + z.a * this.b);
+        return new KomplexeZahl(this.x * z.getRealteil() - this.y * z.getImaginaerteil(), this.x * z.getImaginaerteil() + z.getRealteil() * this.y);
     }
 
     public static void main(String[] args) {
@@ -179,5 +199,4 @@ public class KomplexeZahl {
         System.out.println("summe = " + summe);
 
     }
-
 }

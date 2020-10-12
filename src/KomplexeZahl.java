@@ -1,42 +1,72 @@
 import java.util.Arrays;
 
+/**
+ * @author Niklas Diekhoener
+ */
+
 public class KomplexeZahl {
 
     private double a;
     private double b;
 
+    /**
+     * Konstruktor
+     * @param a Realteil
+     * @param b Imaginaerteil
+     */
     public KomplexeZahl(double a, double b) {
         this.a = a;
         this.b = b;
     }
 
+    /**
+     *
+     * @return gibt den Realteil zurueck
+     */
     public double getA() {
         return this.a;
     }
 
+    /**
+     *
+     * @return gibt den Imaginaerteil zurueck
+     */
     public double getB() {
         return this.b;
     }
 
+    /**
+     * addiert this mit einer weiteren komplexen Zahl
+     * @param z ist die zu addierende Zahl
+     */
     public void addiere(KomplexeZahl z) {
-        // addiert this mit einer weiteren komplexen Zahl
         this.a += z.a;
         this.b += z.b;
     }
 
+    /**
+     * multipliziert this mit einer weiteren komplexen Zahl
+     * @param z ist die zu multiplizierende Zahl
+     */
     public void multipliziere(KomplexeZahl z) {
-        // multipliziert this mit einer weiteren komplexen Zahl
         double c;
         c = this.a;
         this.a = (this.a * z.a) - (this.b * z.b);
         this.b = (c * z.b) + (z.a * this.b);
     }
 
+    /**
+     * Diese Methode berechnet den Betrag einer komplexen Zahl.
+     * @return gibt den Betrag zurueck
+     */
     public double getBetrag() {
-        // gibt den Betrag einer komplexen Zahl zurueck
         return Math.sqrt(Math.pow(this.a, 2) + Math.pow(this.b, 2));
     }
 
+    /**
+     * Ueberschreibt die default toString Methode
+     * @return textuelle Repraesentation der komplexen Zahl
+     */
     public String toString() {
         if (this.b == 0) {
             return "" + this.a;
@@ -59,9 +89,11 @@ public class KomplexeZahl {
         return this.a + " + " + this.b + " i";
     }
 
-
+    /**
+     *
+     * @return gibt die Quadratwurzel einer komplexen Zahl zurueck
+     */
     public KomplexeZahl[] getWurzel() {
-        // gibt die Quadratwurzel einer komplexen Zahl zurueck
         KomplexeZahl[] res = new KomplexeZahl[2];
         KomplexeZahl z1 = new KomplexeZahl(0, 0);
         KomplexeZahl z2 = new KomplexeZahl(0, 0);
@@ -101,17 +133,24 @@ public class KomplexeZahl {
         return res;
     }
 
+    /**
+     * Berechnet die Summer zweiter komplexer Zahlen
+     * @param z zu addierende komplexe Zahl
+     * @return gibt die Summe als komplexe Zahl zurueck
+     */
     public KomplexeZahl getSumme(KomplexeZahl z) {
-        // gibt die Summe zweiter komplexer Zahlen als komplexe Zahl zurueck
         return new KomplexeZahl(this.a + z.a, this.b + z.b);
     }
 
+    /**
+     * Berechnet das Produkt zweiter komplexer Zahlen
+     * @param z ist die zu multiplizierende Zahl
+     * @return gibt das Produkt als komplexe Zahl zurueck
+     */
     public KomplexeZahl getProdukt(KomplexeZahl z) {
         // gibt das Produkt zweiter komplexer Zahlen als komplexe Zahl zurueck
         return new KomplexeZahl(this.a * z.a - this.b * z.b, this.a * z.b + z.a * this.b);
     }
-
-    // Test
 
     public static void main(String[] args) {
         KomplexeZahl z = new KomplexeZahl(0, 0); // z := 0

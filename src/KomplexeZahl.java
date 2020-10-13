@@ -7,8 +7,8 @@ import java.util.Arrays;
 public class KomplexeZahl {
 
     /**
-     * @param x Realteil
-     * @param y Imaginaerteil
+     * x Realteil
+     * y Imaginaerteil
      */
     private double x;
     private double y;
@@ -23,7 +23,6 @@ public class KomplexeZahl {
         this.x = x;
         this.y = y;
     }
-
 
     /**
      * @return gibt den Realteil zurueck
@@ -75,21 +74,22 @@ public class KomplexeZahl {
      * @return textuelle Repraesentation der komplexen Zahl
      */
     public String toString() {
-        String res = new String();
-        if (this.y == 0) {
+        String res = "";
+        double epsilon = 0.00000000000000001; // Doublevergleich mit Epsilon um Rundungsfehler zu vermeiden
+        if (Math.abs(this.y - 0) < epsilon) { // wenn nur Realteil vorhanden
             res += this.x;
         } else {
-            if (this.x == 0) {
-                if (this.y == 1) {
+            if (Math.abs(this.x - 0) < epsilon) { // wenn nur Imaginaerteil vorhanden
+                if (Math.abs(this.y - 1) < epsilon) {
                     res += "i";
                 } else {
                     res += this.y + " i";
                 }
-            } else {
-                if (this.y == 1) {
+            } else { // wenn Realteil und Imaginaerteil vorhanden
+                if (Math.abs(this.y - 1) < epsilon) {
                     res += this.x + " + i";
                 } else {
-                    if (this.y == -1) {
+                    if (Math.abs(this.y + 1) < epsilon) {
                         res += this.x + " - i";
                     } else {
                         if (this.y < 0) {
@@ -109,43 +109,47 @@ public class KomplexeZahl {
      */
     public KomplexeZahl[] getWurzel() {
         KomplexeZahl[] res = new KomplexeZahl[2];
-        KomplexeZahl z1 = new KomplexeZahl(0, 0);
-        KomplexeZahl z2 = new KomplexeZahl(0, 0);
-        boolean schalter = true;
-        double q = 0;
-        if (this.x == 0) {
-            z1 = new KomplexeZahl(0, Math.sqrt(Math.abs(this.y)));
-            z2 = new KomplexeZahl(0, -Math.sqrt(Math.abs(this.y)));
-            schalter = false;
+        KomplexeZahl z1;
+        KomplexeZahl z2;
+        double x1 = 0, x2 = 0;
+        double y1 = 0, y2 = 0;
+        if (this.x == 0) { // wenn nur Imaginaerteil vorhanden, dann +- Imaginaerteil
+            y1 = Math.sqrt(Math.abs(this.y));
+            y2 = -y1;
         } else {
-            if (this.y == 0) {
-                if (this.x > 0) {
-                    z1 = new KomplexeZahl(Math.sqrt(Math.abs(this.x)), 0);
-                    z2 = new KomplexeZahl(-Math.sqrt(Math.abs(this.x)), 0);
+            if (this.y == 0) { // wenn nur Realteil vorhanden
+                if (this.x > 0) { // wenn Realteil groesser 0, dann +- Realteil
+                    x1 = Math.sqrt(Math.abs(this.x));
+                    x2 = -x1;
+                } else { // wenn Reailteil kleiner 0, dann +- Imaginaerteil
+                    y1 = Math.sqrt(Math.abs(this.x));
+                    y2 = -y1;
+                }
+            } else { // wenn Realteil und Imaginaerteil vorhanden
+                double q = 0;
+                if (this.x > 0 && this.y > 0) { // 1. Quadrant
+                    q = Math.atan(this.y / this.x);
                 } else {
-                    z1 = new KomplexeZahl(0, Math.sqrt(Math.abs(this.x)));
-                    z2 = new KomplexeZahl(0, -Math.sqrt(Math.abs(this.x)));
+                    if ((this.x < 0 && this.y > 0) || (this.x < 0 && this.y < 0)) { // 2., 3. Quadrant
+                        q = Math.atan(this.y / this.x) + Math.PI;
+                    } else {
+                        if (this.x > 0 && this.y < 0) { // 4. Quadrant
+                            q = Math.atan(this.y / this.x) + 2 * Math.PI;
+                        }
+                    }
                 }
-                schalter = false;
+                // Berechnung von der Quadratwurzel
+                double r = Math.sqrt(this.getBetrag());
+                double qHalb = q / 2;
+                double qPlus2PiHalb = (q + 2 * Math.PI) / 2;
+                x1 = r * Math.cos(qHalb);
+                y1 = r * Math.sin(qHalb);
+                x2 = r * Math.cos(qPlus2PiHalb);
+                y2 = r * Math.sin(qPlus2PiHalb);
             }
         }
-        if (this.x > 0 && this.y > 0) {
-            q = Math.atan(this.y / this.x);
-        } else {
-            if ((this.x < 0 && this.y > 0) || (this.x < 0 && this.y < 0)) {
-                q = Math.atan(this.y / this.x) + Math.PI;
-            } else {
-                if (this.x > 0 && this.y < 0) {
-                    q = Math.atan(this.y / this.x) + 2 * Math.PI;
-                }
-            }
-        }
-
-        double r = this.getBetrag();
-        if (schalter) {
-            z1 = new KomplexeZahl(Math.sqrt(r) * Math.cos(q / 2), Math.sqrt(r) * Math.sin(q / 2));
-            z2 = new KomplexeZahl(Math.sqrt(r) * Math.cos((q + 2 * Math.PI) / 2), Math.sqrt(r) * Math.sin((q + 2 * Math.PI) / 2));
-        }
+        z1 = new KomplexeZahl(x1, y1);
+        z2 = new KomplexeZahl(x2, y2);
         res[0] = z1;
         res[1] = z2;
         return res;
@@ -168,7 +172,6 @@ public class KomplexeZahl {
      * @return gibt das Produkt als komplexe Zahl zurueck
      */
     public KomplexeZahl getProdukt(KomplexeZahl z) {
-        // gibt das Produkt zweiter komplexer Zahlen als komplexe Zahl zurueck
         return new KomplexeZahl(this.x * z.getRealteil() - this.y * z.getImaginaerteil(), this.x * z.getImaginaerteil() + z.getRealteil() * this.y);
     }
 
@@ -197,6 +200,5 @@ public class KomplexeZahl {
         System.out.println("z2 = " + z2);
         KomplexeZahl summe = z.getSumme(z2); // z := z - z2 = 0
         System.out.println("summe = " + summe);
-
     }
 }

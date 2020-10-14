@@ -1,7 +1,7 @@
 import java.util.Arrays;
 
 /**
- * @author Niklas Diekhoener, Maximilian Kalachnikov, Sebastian Ebert
+ * @author Maximilian Kalachnikov, Sebastian Ebert, Niklas Diekhoener
  */
 
 public class KomplexeZahl {

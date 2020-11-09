@@ -1,64 +1,108 @@
 package h05;
 
 import java.util.InputMismatchException;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class DasSpiel {
 
     public static void main(String[] args) {
+        neuesSpiel();
+    }
+
+    private static void neuesSpiel() {
         int auswahl;
-        System.out.println("        --------- Gefangenendilemma ---------" + "\n");
+        System.out.println("\n" + "       --------- Gefangenendilemma ---------" + "\n");
         System.out.println("1 = Selbst spielen (Multiplayer)" + "\n" + "2 = Vorgegebene Strategien testen (Aufgabe)"
                 + "\n" + "0 = Abbrechen" + "\n");
         System.out.print("Auswahl (int): ");
-        while (true) {
-            try (Scanner sc = new Scanner(System.in)) {
+        try {
+            Scanner sc = new Scanner(System.in); // Scanner muss so benutzt werden, da es sonst nicht klappt
+            if (sc.hasNextLine()) {
                 auswahl = sc.nextInt();
-                if (auswahl != 1 && auswahl != 2 && auswahl != 0)
+                if (auswahl != 1 && auswahl != 2 && auswahl != 0) {
                     throw new InputMismatchException("");
-                sc.close();
-                break;
-            } catch (InputMismatchException e) {
-                System.out.print("Fehler: die Eingabe muss 0 oder 1 sein! Nochmal probieren: ");
+                }
+                if (auswahl == 2) {
+                    strategien();
+                } else {
+                    if (auswahl == 1) {
+                        selbstSpeielen();
+                    }
+                }
+                System.out.println("\n" + "Spiel beendet");
             }
+        } catch (InputMismatchException e) {
+            System.out.print("Eingabefehler, nochmal probieren ..." + "\n");
+            neuesSpiel();
         }
-        if (auswahl == 2) {
-            strategien();
-        } else {
-            if(auswahl == 1)
-            selbstSpeielen();
-        }
-        System.out.println("\n" + "Spiel beendet");
     }
 
     private static void strategien() {
-        //Neues Objekt vom Typ GefangenenDilemma mit 2 Spielern
-        GefangenenDilemma gd = new GefangenenDilemma(new TitForTat(), new Random());
-        //100 mal spielen
-        gd.spiele(100);
+        int auswahl;
+        System.out.println("\n" + "Es werden immer 100 Runden gespielt!");
+        System.out.print("Strategieauswahl:" + "\n" + "1 = TitForTat" + "\n" + "2 = Spite" + "\n" + "3 = Pavlov"
+                + "\n" + "4 = Random" + "\n" + "5 = PerKind" + "\n" + "\n" + "Auswahl: ");
+        try {
+            Scanner sc = new Scanner(System.in); // Scanner muss so benutzt werden, da es sonst nicht klappt
+            if (sc.hasNextInt()) {
+                auswahl = sc.nextInt();
+                GefangenenStrategie s1 = getStrategie(auswahl);
+                System.out.print("und: ");
+                auswahl = sc.nextInt();
+                GefangenenStrategie s2 = getStrategie(auswahl);
+                GefangenenDilemma gd = new GefangenenDilemma(s1, s2);
+                System.out.println("\n");
+                gd.spiele(100);
+            }
+        } catch (NumberFormatException | IllegalStateException e) {
+            System.out.println("Eingabefehler, nochmal probieren ..." + "\n");
+            strategien();
+        }
+    }
+
+    public static GefangenenStrategie getStrategie(int i) {
+        switch (i) {
+            case 1:
+                return new TitForTat();
+            case 2:
+                return new Spite();
+            case 3:
+                return new Pavlov();
+            case 4:
+                return new Random();
+            case 5:
+                return new PerKind();
+            default:
+                throw new IllegalStateException("");
+        }
     }
 
     private static void selbstSpeielen() {
-        String name1;
-        String name2;
-        int runden;
-        System.out.println("\n" + "    _____   Das Spiel beginnt   ____" + "\n");
+        int auswahl;
+        System.out.println("\n" + "\n" + "       ------   Das Spiel   ------");
         while (true) {
-            try (Scanner sc = new Scanner(System.in)) {
-                System.out.print("Name von Spieler 1: ");
-                name1 = sc.nextLine();
-                System.out.print("\n" + "\n" + "Name von Spieler 2: ");
-                name2 = sc.nextLine();
-                System.out.print("\n" + "\n" + "Anzahl der Runden (int): ");
-                runden = Integer.parseInt(sc.nextLine());
-                if (runden < 0)
-                    throw new InputMismatchException("");
+            try {
+                System.out.println("\n" + "Waehle deine Gegnerstrategie: ");
+                System.out.print("Strategieauswahl:" + "\n" + "1 = TitForTat" + "\n" + "2 = Spite" + "\n" +
+                        "3 = Pavlov" + "\n" + "4 = Random" + "\n" + "5 = PerKind" + "\n" + "\n" + "Auswahl: ");
+                Scanner sc = new Scanner(System.in); // Scanner muss so benutzt werden, da es sonst nicht klappt
+                if (sc.hasNextInt()) {
+                    auswahl = sc.nextInt();
+                    GefangenenStrategie s = getStrategie(auswahl);
+                    System.out.print("Anzahl der Runden (int): ");
+                    auswahl = sc.nextInt();
+                    if (auswahl < 0)
+                        throw new InputMismatchException("");
+                    GefangenenDilemma gd = new GefangenenDilemma(new SpielerStrategie(), s);
+                    System.out.println("\n" + "\n" + "       ------   Das Spiel beginnt   ------" + "\n" +
+                            "(Du bist P1)");
+                    gd.spiele(auswahl);
+                }
                 break;
             } catch (InputMismatchException e) {
-                System.out.print("Runde muss in einem positiven Integer eingegeben werden, nochmal probieren:");
+                System.out.print("Eingabefehler, nochmal probieren ..." + "\n");
+                selbstSpeielen();
             }
         }
-        GefangenenDilemma gd = new GefangenenDilemma(name1, name2, runden);
     }
 }

@@ -16,7 +16,7 @@ public class DasSpiel {
                 + "\n" + "0 = Abbrechen" + "\n");
         System.out.print("Auswahl (int): ");
         try {
-            Scanner sc = new Scanner(System.in); // Scanner muss so benutzt werden, da es sonst nicht klappt
+            Scanner sc = new Scanner(System.in); // kein sc.close() damit System.in nicht geschlossen wird
             if (sc.hasNextLine()) {
                 auswahl = sc.nextInt();
                 if (auswahl != 1 && auswahl != 2 && auswahl != 0) {
@@ -43,7 +43,7 @@ public class DasSpiel {
         System.out.print("Strategieauswahl:" + "\n" + "1 = TitForTat" + "\n" + "2 = Spite" + "\n" + "3 = Pavlov"
                 + "\n" + "4 = Random" + "\n" + "5 = PerKind" + "\n" + "\n" + "Auswahl: ");
         try {
-            Scanner sc = new Scanner(System.in); // Scanner muss so benutzt werden, da es sonst nicht klappt
+            Scanner sc = new Scanner(System.in); // kein sc.close() damit System.in nicht geschlossen wird
             if (sc.hasNextInt()) {
                 auswahl = sc.nextInt();
                 GefangenenStrategie s1 = getStrategie(auswahl);
@@ -85,7 +85,7 @@ public class DasSpiel {
                 System.out.println("\n" + "Waehle deine Gegnerstrategie: ");
                 System.out.print("Strategieauswahl:" + "\n" + "1 = TitForTat" + "\n" + "2 = Spite" + "\n" +
                         "3 = Pavlov" + "\n" + "4 = Random" + "\n" + "5 = PerKind" + "\n" + "\n" + "Auswahl: ");
-                Scanner sc = new Scanner(System.in); // Scanner muss so benutzt werden, da es sonst nicht klappt
+                Scanner sc = new Scanner(System.in); // kein sc.close() damit System.in nicht geschlossen wird
                 if (sc.hasNextInt()) {
                     auswahl = sc.nextInt();
                     GefangenenStrategie s = getStrategie(auswahl);

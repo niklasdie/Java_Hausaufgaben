@@ -1,8 +1,10 @@
 package h05;
 
+/**
+ * Erweitert das Interface GefangenenStrategie und implementiert die Strategie PerKind.
+ */
 public class PerKind implements GefangenenStrategie {
 
-    private boolean opponentsLastDecision = false;
     private int i = 0;
 
     @Override
@@ -17,6 +19,5 @@ public class PerKind implements GefangenenStrategie {
 
     @Override
     public void setOpponentsLastDecision(boolean opponentsLastDecision) {
-        this.opponentsLastDecision = opponentsLastDecision;
     }
 }

@@ -1,5 +1,8 @@
 package h05;
 
+/**
+ * Erweitert das Interface GefangenenStrategie und implementiert die Strategie Pavlov.
+ */
 public class Pavlov implements GefangenenStrategie {
 
     private boolean opponentsLastDecision = false;

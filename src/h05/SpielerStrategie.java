@@ -3,6 +3,9 @@ package h05;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+/**
+ * Erweitert das Interface GefangenenStrategie und implementiert die Moeglichkeit selbst zu spielen.
+ */
 public class SpielerStrategie implements GefangenenStrategie{
 
 
@@ -31,10 +34,10 @@ public class SpielerStrategie implements GefangenenStrategie{
 
     @Override
     public void setOpponentsLastDecision(boolean decision) {
+        System.out.println();
         if(!decision)
             System.out.println("Dein Gegner hat koopertiert.");
         if(decision)
             System.out.println("Dein Gegner hat dich betrogen!");
-        System.out.println();
     }
 }

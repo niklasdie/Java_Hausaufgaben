@@ -1,5 +1,8 @@
 package h05;
 
+/**
+ * Erweitert das Interface GefangenenStrategie und implementiert die Strategie Spite.
+ */
 public class Spite implements GefangenenStrategie {
 
     private boolean opponentsLastDecision = false;

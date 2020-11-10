@@ -9,10 +9,14 @@ public class DasSpiel {
         neuesSpiel();
     }
 
+    /**
+     * Wird vom Konstruktor aufgerufen und gibt das Anfangsmenue aus und verarbeitet die erste Eingabe.
+     * Ruft danach strategie() oder selbstSpielen() auf.
+     */
     private static void neuesSpiel() {
         int auswahl;
         System.out.println("\n" + "       --------- Gefangenendilemma ---------" + "\n");
-        System.out.println("1 = Selbst spielen (Multiplayer)" + "\n" + "2 = Vorgegebene Strategien testen (Aufgabe)"
+        System.out.println("1 = Selbst spielen (Extra)" + "\n" + "2 = Vorgegebene Strategien testen (Aufgabe)"
                 + "\n" + "0 = Abbrechen" + "\n");
         System.out.print("Auswahl (int): ");
         try {
@@ -37,6 +41,10 @@ public class DasSpiel {
         }
     }
 
+    /**
+     * Hier faengt der eigentliche Hausaufgabenteil an.
+     * Es werden die Strategien ausgegeben, die Eingabe der Auswahl verarbeitet und das Spiel wird gestartet.
+     */
     private static void strategien() {
         int auswahl;
         System.out.println("\n" + "Es werden immer 100 Runden gespielt!");
@@ -60,7 +68,13 @@ public class DasSpiel {
         }
     }
 
-    public static GefangenenStrategie getStrategie(int i) {
+    /**
+     * Hilfsfunktion die in strategie() und selbstSpielen() genutzt wird, die das erzeugen einer ausgewaehlten
+     * Strategie vereinfacht.
+     * @param i die eingegeben Auswahl
+     * @return eine neue Gefangenenstrategie
+     */
+    private static GefangenenStrategie getStrategie(int i) {
         switch (i) {
             case 1:
                 return new TitForTat();
@@ -77,6 +91,11 @@ public class DasSpiel {
         }
     }
 
+    /**
+     * Zusaetzlich zur Hausaufgabe
+     * Es wird eine Gegnerstrategie und die Rundenanzahl gewaehlt fuer ein Spiel, welches man gegen eine
+     * vorprogrammierte Strategie spielt, danach wird das Spiel gestartet.
+     */
     private static void selbstSpeielen() {
         int auswahl;
         System.out.println("\n" + "\n" + "       ------   Das Spiel   ------");

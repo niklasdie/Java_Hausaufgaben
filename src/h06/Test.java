@@ -9,7 +9,7 @@ public class Test {
         Blatt drillingNiedrig = new Blatt(new int[]{2, 2, 2});
         Blatt drillingHoch = new Blatt(new int[]{9, 9, 9});
         Blatt paarNiedrig = new Blatt(new int[]{2, 2, 3});
-        Blatt paarHoch = new Blatt(new int[]{2, 5, 5});
+        Blatt paarHoch = new Blatt(new int[]{12, 13, 14}); // war ein Fehler -1P
         Blatt paarHoch2 = new Blatt(new int[]{10, 5, 5});
 //Weder Paar noch Drilling, alle Karten sind unterschiedlich
         Blatt einfachNiedrig = new Blatt(new int[]{2, 3, 8});

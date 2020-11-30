@@ -5,7 +5,7 @@ import java.util.Comparator;
 public class BlattVergleich implements Comparator<Blatt> {
 
     /**
-     * Vergleicht die Blätter miteinander und gibt zurueck welches gewonnen bzw verloren hat oder
+     * Vergleicht die Blaetter miteinander und gibt zurueck welches gewonnen bzw verloren hat oder
      * ob ein Unentschieden existiert.
      *
      * @param o1 Blatt 1 welches mit dem anderen Blatt verglichen wird.
@@ -19,7 +19,7 @@ public class BlattVergleich implements Comparator<Blatt> {
 
     /**
      * Hilfsmethode welche einem Blatt anhand der Karten einen Wert zuweist bzw zurueck gibt, welcher
-     * zum Vergleich zweier Blätter dient.
+     * zum Vergleich zweier Blaetter dient.
      *
      * @param b Blatt von dem der Wert ermittelt werden soll
      * @return den Wert des Blattes
@@ -31,13 +31,13 @@ public class BlattVergleich implements Comparator<Blatt> {
             // Drilling
         } else {
             if (b.getKarte(0) == b.getKarte(1)) {
-                return b.getKarte(0) * 8 + b.getKarte(1) * 8 + b.getKarte(2);
+                return 42 + b.getKarte(0) * 8 + b.getKarte(1) * 8 + b.getKarte(2);
             } else {
                 if (b.getKarte(1) == b.getKarte(2)) {
-                    return b.getKarte(1) * 8 + b.getKarte(2) * 8 + b.getKarte(0);
+                    return 42 + b.getKarte(1) * 8 + b.getKarte(2) * 8 + b.getKarte(0);
                 } else {
                     if (b.getKarte(0) == b.getKarte(2)) {
-                        return b.getKarte(0) * 8 + b.getKarte(2) * 8 + b.getKarte(1);
+                        return 42 + b.getKarte(0) * 8 + b.getKarte(2) * 8 + b.getKarte(1);
                         // Paar
                     } else {
                         return b.getKarte(0) + b.getKarte(1) + b.getKarte(2);

@@ -9,7 +9,7 @@ public class Blatt {
     /**
      * Konstruktor erzeugt ein Blatt Objekt.
      *
-     * @param arr Eingabe int-Array der Länge 3.
+     * @param arr Eingabe int-Array der Leange 3.
      */
     public Blatt(int[] arr) {
         if (!(arr instanceof int[]) && arr.length != 3) {

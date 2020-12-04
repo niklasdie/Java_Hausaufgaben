@@ -20,6 +20,11 @@ public class Position {
         }
     }
 
+    public Position(Position pos) {
+        this.x = pos.getX();
+        this.y = pos.getY();
+    }
+
     /**
      * Ueberprueft ob die eingegebenen Koordinaten auf dem Spielbrett liegen und gibt das Ergebnis zurueck.
      *

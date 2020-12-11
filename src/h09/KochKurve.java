@@ -18,7 +18,7 @@ public class KochKurve {
     public static void kochKurve(double ax, double ay, double bx, double by, int rek) {
         System.out.print("Rekursionstiefe " + rek + ": ");
         kochKurveRek(ax, ay, bx, by, rek);
-        System.out.printf("(" + "%.1f" + "/" + "%.1f" + ")" + "\n", bx, by);
+        System.out.printf("(%.1f/%.1f)\n", bx, by); // Runden meiner Ansicht nach besser
     }
 
     /**
@@ -32,7 +32,7 @@ public class KochKurve {
      */
     private static void kochKurveRek(double ax, double ay, double bx, double by, int rek) {
         if (rek == 0) {
-            System.out.printf("(" + "%.1f" + "/" + "%.1f" + ")", ax, ay);
+            System.out.printf("(%.1f/%.1f) ", ax, ay); // Runden meiner Ansicht nach besser
         } else {
             double p1x, p1y, p2x, p2y, p3x, p3y;
             double faktor = Math.sqrt(3) / 2;

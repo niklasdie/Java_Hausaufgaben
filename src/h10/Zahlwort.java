@@ -97,58 +97,58 @@ public class Zahlwort {
         String res = "";
         switch (x) {
             case 0:
-                res += "und";
+                res = "und";
                 break;
             case 1:
-                res += "ein";
+                res = "ein";
                 break;
             case 2:
-                res += "zwei";
+                res = "zwei";
                 break;
             case 3:
-                res += "drei";
+                res = "drei";
                 break;
             case 4:
-                res += "vier";
+                res = "vier";
                 break;
             case 5:
-                res += "fuenf";
+                res = "fuenf";
                 break;
             case 6:
-                res += "sechs";
+                res = "sechs";
                 break;
             case 7:
-                res += "sieben";
+                res = "sieben";
                 break;
             case 8:
-                res += "acht";
+                res = "acht";
                 break;
             case 9:
-                res += "neun";
+                res = "neun";
                 break;
             case 10:
-                res += "zehn";
+                res = "zehn";
                 break;
             case 11:
-                res += "elf";
+                res = "elf";
                 break;
             case 12:
-                res += "zwoelf";
+                res = "zwoelf";
                 break;
             case 16:
-                res += "sechzehn";
+                res = "sechzehn";
                 break;
             case 17:
-                res += "siebzehn";
+                res = "siebzehn";
                 break;
             case 20:
-                res += "zwanzig";
+                res = "zwanzig";
                 break;
             case 60:
-                res += "sechzig";
+                res = "sechzig";
                 break;
             case 70:
-                res += "siebzig";
+                res = "siebzig";
                 break;
         }
         return res;
@@ -161,7 +161,7 @@ public class Zahlwort {
         System.out.println("Test 1:");
         // erweiterte Ausgaben fuer problematische Zahlen
         int[] testtabelle = {1, 10, 11, 12, 13, 16, 17, 20, 25, 38, 60, 69,
-                70, 73, 131, 195, 201, 202, 211, 735, 1111, 2345, 6854};
+                70, 73, 131, 195, 201, 202, 211, 777, 1111, 2345, 6854};
         for (int z : testtabelle) {
             String zahlwort = Zahlwort.getZahlwort(z);
             System.out.println("zahl = " + z + " --> " + zahlwort);

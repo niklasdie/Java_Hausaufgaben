@@ -15,24 +15,13 @@ public class PositiveNumber {
         this.value = 0;
     }
 
-    // Testen
-    public static void main(String[] args) {
-        PositiveNumber zs = new PositiveNumber();
-        zs.setDecimal("144");
-        System.out.println("Binaer: " + zs.getBinary());
-        zs.setHexadecimal("affe");
-        System.out.println("Dezimal: " + zs.getDecimal());
-        zs.setBinary("1000101011");
-        System.out.println("Hexadezimal: " + zs.getHexadecimal());
-    }
-
     /**
      * Gibt die Zahl als Dezimalzahl zurueck.
      *
      * @return Dezimalzahl als String
      */
     public String getDecimal() {
-        return "" + value;
+        return "" + this.value;
     }
 
     /**
@@ -42,11 +31,11 @@ public class PositiveNumber {
      */
     public void setDecimal(String s) {
         this.value = 0;
-        proof(s);
-        for (int i = 0; i < s.length(); i++) {
+        this.proof(s);
+        for (int i = 0; i < s.length(); i++) { // extra kein Integer.parseInt()
             char c = s.charAt(i);
-            int d = hexDigits.indexOf(c);
-            value = value * 10 + d;
+            int d = this.hexDigits.indexOf(c);
+            this.value = this.value * 10 + d;
         }
     }
 
@@ -56,10 +45,11 @@ public class PositiveNumber {
      * @return Hexadezimalzahl als String
      */
     public String getHexadecimal() {
-        String binary = decimalToBinary(value);
+        int x = this.value;
         StringBuilder res = new StringBuilder();
-        for (int i = binary.length() - 4; i >= 0; i -= 4) {
-            res.insert(0, hexDigits.charAt(binaryToDecimal(binary.substring(i, i + 4))));
+        while (x > 0) {
+            res.insert(0, this.hexDigits.charAt(x % 16));
+            x /= 16;
         }
         return res.toString();
     }
@@ -75,8 +65,8 @@ public class PositiveNumber {
         proof(s);
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
-            int d = hexDigits.indexOf(c);
-            value = value * 16 + d;
+            int d = this.hexDigits.indexOf(c);
+            this.value = this.value * 16 + d;
         }
     }
 
@@ -86,7 +76,13 @@ public class PositiveNumber {
      * @return Binaerzahl als String
      */
     public String getBinary() {
-        return this.decimalToBinary(value);
+        int x = this.value;
+        StringBuilder res = new StringBuilder();
+        while (x > 0) {
+            res.insert(0, x % 2 == 0 ? "0" : "1");
+            x /= 2;
+        }
+        return res.toString();
     }
 
     /**
@@ -96,50 +92,35 @@ public class PositiveNumber {
      */
     public void setBinary(String s) {
         this.value = 0;
-        proof(s);
-        value = this.binaryToDecimal(s);
+        this.proof(s);
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            int d = this.hexDigits.indexOf(c);
+            this.value = this.value * 2 + d;
+        }
     }
 
     /**
-     * Hilfsmethode die von dezimal in binaer umrechnet.
-     *
-     * @param x Dezimalzahl als int
-     * @return Binaerzahl als String
-     */
-    private String decimalToBinary(int x) {
-        StringBuilder res = new StringBuilder();
-        while (x > 0) {
-            res.insert(0, x % 2 == 0 ? "0" : "1");
-            x /= 2;
-        }
-        while (res.length() % 4 != 0) {
-            res.insert(0, 0);
-        }
-        return res.toString();
-    }
-
-    /**
-     * Hilfsmethode die von binear in dezimal umrechnet.
-     *
-     * @param s Binaerzahl als String
-     * @return Dezimalzahl als int
-     */
-    private int binaryToDecimal(String s) {
-        int res = 0;
-        for (int i = 0; i <= s.length() - 1; i++) {
-            res += (s.charAt(i) - 48) * (int) Math.pow(2, s.length() - 1 - i);
-        }
-        return res;
-    }
-
-    /**
-     * Hilfsmethode die prueft ob eine Zahl die eingegeben wurde negativ ist.
+     * Hilfsmethode die prueft ob eine Zahl die eingegeben wurde zulässig ist.
      *
      * @param s Zahl als String
      */
     private void proof(String s) {
-        if (s.charAt(0) == '-') {
-            throw new NumberFormatException("Nur positive Zahlen");
+        for (int i = 0; i < s.length(); i++) {
+            if (this.hexDigits.indexOf(s.charAt(i)) == -1) {
+                throw new NumberFormatException("Keine zulässige Zahl!");
+            }
         }
+    }
+
+    // Testen
+    public static void main(String[] args) {
+        PositiveNumber zs = new PositiveNumber();
+        zs.setDecimal("144");
+        System.out.println("Binaer: " + zs.getBinary());
+        zs.setHexadecimal("affe");
+        System.out.println("Dezimal: " + zs.getDecimal());
+        zs.setBinary("1000101011");
+        System.out.println("Hexadezimal: " + zs.getHexadecimal());
     }
 }
